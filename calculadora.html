@@ -20,16 +20,40 @@
         }
 
         #calculator {
-            display: grid;
-            grid-template-columns: repeat(3, 80px) 80px;
-            gap: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: 20px;
             border: 2px solid #724242;
             border-radius: 10px;
-            background-image: url('sua-imagem.jpg'); /* Substitua pelo caminho da sua imagem da calculadora */
-            background-size: cover; /* Faz a imagem cobrir toda a área */
-            background-position: center; /* Centraliza a imagem */
+            background-color: white; /* Fundo branco para a calculadora */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #display {
+            width: 340px; /* Ajuste a largura conforme necessário */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white;
+            text-align: center; /* Centraliza o texto e a imagem */
+            font-size: 24px;
+            margin-bottom: 10px;
+            overflow-wrap: break-word; /* Garante que o texto longo seja quebrado e visível */
+            position: relative;
+        }
+
+        #display img {
+            max-width: 100%; /* Faz com que a imagem se ajuste ao display */
+            height: auto;
+            display: block; /* Garante que a imagem apareça abaixo do texto */
+            margin: 10px auto; /* Adiciona margens automáticas para centralizar a imagem */
+        }
+
+        .btn-container {
+            display: grid;
+            grid-template-columns: repeat(3, 80px) 80px;
+            gap: 10px;
         }
 
         .btn {
@@ -37,54 +61,43 @@
             padding: 20px;
             border: none;
             border-radius: 5px;
-            background-color: #4ddf89;
+            background-color: #f8ffb7;
             cursor: pointer;
         }
 
         .btn-operator {
             grid-column: 4;
-            background-color: #62acda;
+            background-color: #aed8f3;
         }
 
         #result {
-            margin-top: 20px;
             display: none;
-            text-align: center;
-        }
-
-        #result img {
-            width: 200px;
-            height: auto;
-        }
-
-        #result p {
-            font-size: 28px;
-            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
     <div id="calculator">
-        <!-- Nove botões alternando entre "eu" e "você" -->
-        <button class="btn" onclick="addInput('eu')">eu</button>
-        <button class="btn" onclick="addInput('você')">você</button>
-        <button class="btn" onclick="addInput('eu')">eu</button>
-        <button class="btn" onclick="addInput('você')">você</button>
-        <button class="btn" onclick="addInput('eu')">eu</button>
-        <button class="btn" onclick="addInput('você')">você</button>
-        <button class="btn" onclick="addInput('eu')">eu</button>
-        <button class="btn" onclick="addInput('você')">você</button>
-        <button class="btn" onclick="addInput('eu')">eu</button>
+        <div id="display">0</div> <!-- Adiciona um display para a equação -->
+        <div class="btn-container">
+            <!-- Nove botões alternando entre "eu" e "você" -->
+            <button class="btn" onclick="addInput('eu')">eu</button>
+            <button class="btn" onclick="addInput('você')">você</button>
+            <button class="btn" onclick="addInput('eu')">eu</button>
+            <button class="btn" onclick="addInput('você')">você</button>
+            <button class="btn" onclick="addInput('eu')">eu</button>
+            <button class="btn" onclick="addInput('você')">você</button>
+            <button class="btn" onclick="addInput('eu')">eu</button>
+            <button class="btn" onclick="addInput('você')">você</button>
+            <button class="btn" onclick="addInput('eu')">eu</button>
 
-        <!-- Botão "+" -->
-        <button class="btn btn-operator" onclick="addInput('+')">+</button>
-        
-        <!-- Botão "=" -->
-        <button class="btn btn-operator" onclick="calculate()">=</button>
+            <!-- Botão "+" -->
+            <button class="btn btn-operator" onclick="addInput('+')">+</button>
+            
+            <!-- Botão "=" -->
+            <button class="btn btn-operator" onclick="calculate()">=</button>
+        </div>
     </div>
-
-    <p id="equation"></p>
 
     <div id="result">
         <img id="result-img" src="" alt="">
@@ -96,31 +109,32 @@
 
         function addInput(value) {
             equation += value + ' ';
-            document.getElementById('equation').textContent = equation.trim();
+            document.getElementById('display').textContent = equation.trim();
+            // Esconde a seção de resultado quando uma nova entrada é feita
+            document.getElementById('result').style.display = 'none';
         }
 
         function calculate() {
             const trimmedEquation = equation.trim();
 
             if (trimmedEquation === 'eu + você' || trimmedEquation === 'você + eu') {
-                // Exibe a imagem e "TUDO"
-                document.getElementById('result-img').src = 'tudo.PNG'; // Substitua pela imagem que você quer usar
-                document.getElementById('result-text').textContent = 'TUDO, até porque, quem sou eu sem você?';
-                document.getElementById('result').style.display = 'block';
+                // Atualiza o display com o resultado
+                document.getElementById('display').innerHTML = '<p>TUDO, até porque, quem sou eu sem você?</p><img src="tudo.PNG" alt="">';
             } else if (trimmedEquation === 'eu + eu') {
-                // Exibe a imagem "tristeza2" e o texto correspondente
-                document.getElementById('result-img').src = 'tristeza2.PNG'; // Substitua pela imagem que você quer usar
-                document.getElementById('result-text').textContent = 'nada, só tristeza ok';
-                document.getElementById('result').style.display = 'block';
+                // Atualiza o display com o resultado
+                document.getElementById('display').innerHTML = '<p>nada, só tristeza e códigos ok</p><img src="tristeza2.PNG" alt="">';
             } else if (trimmedEquation === 'você + você') {
-                // Exibe a imagem "tristeza1" e o texto correspondente
-                document.getElementById('result-img').src = 'tristeza1.PNG'; // Substitua pela imagem que você quer usar
-                document.getElementById('result-text').textContent = 'nada, só tristeza ok';
-                document.getElementById('result').style.display = 'block';
+                // Atualiza o display com o resultado
+                document.getElementById('display').innerHTML = '<p>nada, só tristeza, livros e comunismo ok</p><img src="tristeza1.PNG" alt="">';
             } else {
                 // Reseta a página ou a calculadora
                 resetCalculator();
             }
+
+            // Esconde a seção de resultado
+            document.getElementById('result').style.display = 'none';
+            // Limpa a equação após o cálculo
+            equation = '';
         }
 
         function resetCalculator() {
