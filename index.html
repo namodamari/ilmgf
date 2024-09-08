@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fica comigo pra sempre, mari por favorzinho?</title>
+    <style>
+        #conteudo {
+            background-image: url('fundo.png'); /* Corrigido aqui */
+            background-size: cover; /* Faz a imagem cobrir toda a área */
+            background-position: center; /* Centraliza a imagem */
+            background-repeat: no-repeat; /* Impede a repetição da imagem */
+            width: 100%;
+            height: 100vh; /* Usa 100% da altura da viewport */
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 10px;
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        .btn-container {
+            display: flex; /* Usa flexbox para alinhamento */
+            justify-content: center; /* Centraliza os botões horizontalmente */
+            gap: 40px; /* Aumenta o espaço entre os botões */
+            position: relative;
+            margin-top: 20px; /* Espaço acima dos botões */
+        }
+
+        .btn-img {
+            cursor: pointer; /* Mostra um ponteiro quando passa sobre a imagem */
+            border: none; /* Remove a borda */
+            outline: none; /* Remove a borda de foco */
+            width: 80px; /* Ajuste o tamanho da imagem conforme necessário */
+            height: auto; /* Mantém a proporção da imagem */
+            z-index: 10; /* Garante que as imagens fiquem acima do fundo */
+        }
+    </style>
+</head>
+<body>
+    <div id="conteudo">
+        <h2>aceita viver sua vida comigo?</h2>
+        <div class="btn-container">
+            <img src="sim.png" class="btn-img" onclick="sim()" alt="SIM">
+            <img src="nao.png" class="btn-img" onclick="desvia(this)" onmouseover="desvia(this)" alt="NÃO">
+        </div>
+    </div>
+
+    <script>
+        function sim() {
+            alert("escolheu certo ok");
+            // redireciona para um URL após clicar no SIM
+            location.href = "https://www.tiktok.com/@nxmoradinhodamari/video/7410208335380729094";
+        }
+
+        function desvia(img) {
+            // Move o botão "NÃO" para uma posição aleatória dentro da tela
+            const maxX = window.innerWidth - img.offsetWidth; // Máxima posição x
+            const maxY = window.innerHeight - img.offsetHeight; // Máxima posição y
+            img.style.position = 'absolute';
+            img.style.left = `${Math.random() * maxX}px`; // Move para uma posição x aleatória
+            img.style.top = `${Math.random() * maxY}px`; // Move para uma posição y aleatória
+            console.log('opa, desviei...');
+        }
+    </script>
+</body>
+</html>
