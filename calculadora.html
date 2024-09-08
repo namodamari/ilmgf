@@ -13,7 +13,7 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            background-image: url('seu-fundo.jpg'); /* Substitua pelo caminho da sua imagem */
+            background-image: url('fundo2.png'); /* Substitua pelo caminho da sua imagem de fundo */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -24,9 +24,9 @@
             grid-template-columns: repeat(3, 80px) 80px;
             gap: 10px;
             padding: 20px;
-            border: 2px solid #ccc;
+            border: 2px solid #724242;
             border-radius: 10px;
-            background-image: url('sua-imagem.jpg'); /* Substitua pelo caminho da sua imagem */
+            background-image: url('sua-imagem.jpg'); /* Substitua pelo caminho da sua imagem da calculadora */
             background-size: cover; /* Faz a imagem cobrir toda a área */
             background-position: center; /* Centraliza a imagem */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -37,13 +37,13 @@
             padding: 20px;
             border: none;
             border-radius: 5px;
-            background-color: #f8ccf4;
+            background-color: #4ddf89;
             cursor: pointer;
         }
 
         .btn-operator {
             grid-column: 4;
-            background-color: #dfe7ec;
+            background-color: #62acda;
         }
 
         #result {
@@ -110,12 +110,12 @@
             } else if (trimmedEquation === 'eu + eu') {
                 // Exibe a imagem "tristeza2" e o texto correspondente
                 document.getElementById('result-img').src = 'tristeza2.PNG'; // Substitua pela imagem que você quer usar
-                document.getElementById('result-text').textContent = 'nada, só tristeza e codigos ok';
+                document.getElementById('result-text').textContent = 'nada, só tristeza ok';
                 document.getElementById('result').style.display = 'block';
             } else if (trimmedEquation === 'você + você') {
                 // Exibe a imagem "tristeza1" e o texto correspondente
                 document.getElementById('result-img').src = 'tristeza1.PNG'; // Substitua pela imagem que você quer usar
-                document.getElementById('result-text').textContent = 'nada, só tristeza, livros e comunismo ok';
+                document.getElementById('result-text').textContent = 'nada, só tristeza ok';
                 document.getElementById('result').style.display = 'block';
             } else {
                 // Reseta a página ou a calculadora
@@ -124,7 +124,7 @@
         }
 
         function resetCalculator() {
-            alert('equaçao invalida(tive preguiça de programar esse resultado WADJWKDW! a pagina vai ser resetada.');
+            alert('Equação inválida! A página será recarregada.');
             // Recarrega a página
             location.reload(); 
         }
