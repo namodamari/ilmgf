@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eu + Você = TUDO</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('seu-fundo.jpg'); /* Substitua pelo caminho da sua imagem */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        #calculator {
+            display: grid;
+            grid-template-columns: repeat(3, 80px) 80px;
+            gap: 10px;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-image: url('sua-imagem.jpg'); /* Substitua pelo caminho da sua imagem */
+            background-size: cover; /* Faz a imagem cobrir toda a área */
+            background-position: center; /* Centraliza a imagem */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            font-size: 24px;
+            padding: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #f8ccf4;
+            cursor: pointer;
+        }
+
+        .btn-operator {
+            grid-column: 4;
+            background-color: #dfe7ec;
+        }
+
+        #result {
+            margin-top: 20px;
+            display: none;
+            text-align: center;
+        }
+
+        #result img {
+            width: 200px;
+            height: auto;
+        }
+
+        #result p {
+            font-size: 28px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="calculator">
+        <!-- Nove botões alternando entre "eu" e "você" -->
+        <button class="btn" onclick="addInput('eu')">eu</button>
+        <button class="btn" onclick="addInput('você')">você</button>
+        <button class="btn" onclick="addInput('eu')">eu</button>
+        <button class="btn" onclick="addInput('você')">você</button>
+        <button class="btn" onclick="addInput('eu')">eu</button>
+        <button class="btn" onclick="addInput('você')">você</button>
+        <button class="btn" onclick="addInput('eu')">eu</button>
+        <button class="btn" onclick="addInput('você')">você</button>
+        <button class="btn" onclick="addInput('eu')">eu</button>
+
+        <!-- Botão "+" -->
+        <button class="btn btn-operator" onclick="addInput('+')">+</button>
+        
+        <!-- Botão "=" -->
+        <button class="btn btn-operator" onclick="calculate()">=</button>
+    </div>
+
+    <p id="equation"></p>
+
+    <div id="result">
+        <img id="result-img" src="" alt="">
+        <p id="result-text"></p>
+    </div>
+
+    <script>
+        let equation = '';
+
+        function addInput(value) {
+            equation += value + ' ';
+            document.getElementById('equation').textContent = equation.trim();
+        }
+
+        function calculate() {
+            const trimmedEquation = equation.trim();
+
+            if (trimmedEquation === 'eu + você' || trimmedEquation === 'você + eu') {
+                // Exibe a imagem e "TUDO"
+                document.getElementById('result-img').src = 'tudo.PNG'; // Substitua pela imagem que você quer usar
+                document.getElementById('result-text').textContent = 'TUDO, até porque, quem sou eu sem você?';
+                document.getElementById('result').style.display = 'block';
+            } else if (trimmedEquation === 'eu + eu') {
+                // Exibe a imagem "tristeza2" e o texto correspondente
+                document.getElementById('result-img').src = 'tristeza2.PNG'; // Substitua pela imagem que você quer usar
+                document.getElementById('result-text').textContent = 'nada, só tristeza e codigos ok';
+                document.getElementById('result').style.display = 'block';
+            } else if (trimmedEquation === 'você + você') {
+                // Exibe a imagem "tristeza1" e o texto correspondente
+                document.getElementById('result-img').src = 'tristeza1.PNG'; // Substitua pela imagem que você quer usar
+                document.getElementById('result-text').textContent = 'nada, só tristeza, livros e comunismo ok';
+                document.getElementById('result').style.display = 'block';
+            } else {
+                // Reseta a página ou a calculadora
+                resetCalculator();
+            }
+        }
+
+        function resetCalculator() {
+            alert('equaçao invalida(tive preguiça de programar esse resultado WADJWKDW! a pagina vai ser resetada.');
+            // Recarrega a página
+            location.reload(); 
+        }
+    </script>
+</body>
+</html>
