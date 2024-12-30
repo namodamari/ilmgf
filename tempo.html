@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo o tempo!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe6f0;
+        }
+        .clock {
+            text-align: center;
+            font-size: 2rem;
+            color: #d63384;
+            background-color: #fff0f5;
+            border: 4px solid #d63384;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .clock span {
+            font-weight: bold;
+            color: #ff69b4;
+        }
+        .clock p:first-child {
+            font-size: 1.5rem;
+            color: #d63384;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="clock">
+        <p>você estava falando de casamento colombiano a exatamente : </p>
+        <p><span id="days">0</span> dias, <span id="hours">0</span> horas, <span id="minutes">0</span> minutos, <span id="seconds">0</span> segundos</p>
+    </div>
+
+    <script>
+        // Data inicial
+        const startDate = new Date("2024-05-08T17:45:00");
+
+        function updateClock() {
+            const now = new Date();
+            const diff = now - startDate; // Diferença em milissegundos
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            // Atualiza os elementos na página
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+
+        // Atualiza o relógio a cada segundo
+        setInterval(updateClock, 1000);
+        updateClock(); // Chamada inicial para evitar atraso
+    </script>
+</body>
+</html>
