@@ -3,81 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quebra-cabeça</title>
+    <title>US!</title>
     <style>
         body {
             display: flex;
             flex-direction: column;
             align-items: center;
             font-family: Arial, sans-serif;
+            background-image: url('casinha.png'); /* Substitua aqui pelo caminho da sua imagem de fundo */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            margin: 0;
         }
 
         #puzzle-container {
             position: relative;
-            width: 300px; /* Ajustado para 3x3 (300px de largura) */
-            height: 300px; /* Ajustado para 3x3 (300px de altura) */
+            width: 400px; /* Ajuste para maior largura */
+            height: 300px; /* Altura proporcional à largura */
             display: grid;
-            grid-template-columns: repeat(3, 100px); /* 3 colunas */
+            grid-template-columns: repeat(4, 100px); /* 4 colunas */
             grid-template-rows: repeat(3, 100px); /* 3 linhas */
             gap: 2px;
             margin-top: 20px;
             padding: 2px;
-            border-radius: 10px; /* Bordas arredondadas para suavizar ainda mais */
+            border-radius: 10px;
             background-color: #f8f8f8;
-            border: 4px solid rgb(255, 119, 255); /* Borda azul adicionada */
-        }
-
-        #puzzle-container div {
-            box-sizing: border-box; /* Garante que a borda esteja incluída no tamanho da célula */
+            border: 4px solid rgb(156, 217, 241);
         }
 
         #pieces-container {
             position: relative;
-            width: 300px; /* Ajustado para 300px (mesmo tamanho do tabuleiro) */
+            width: 400px;
             height: 300px;
             margin-top: 20px;
             display: flex;
             flex-wrap: wrap;
             gap: 2px;
             padding: 2px;
-            border-radius: 10px; /* Bordas arredondadas para suavizar */
+            border-radius: 10px;
         }
 
         .puzzle-piece {
             width: 100px;
             height: 100px;
-            background-size: 300px 300px; /* Ajuste da imagem de fundo */
+            background-size: 400px 300px; /* Tamanho da imagem ajustado ao tabuleiro */
             position: absolute;
             cursor: pointer;
-            transition: transform 0.3s ease; /* Animação de movimento suave */
-            touch-action: none; /* Desativa ações padrão de toque para dispositivos móveis */
+            transition: transform 0.3s ease;
+            touch-action: none;
         }
 
-        /* Para a peça quando está no lugar certo */
         .placed {
-            border: 2px solid rgb(255, 168, 248);
+            border: 2px solid rgb(129, 255, 249);
         }
     </style>
 </head>
 <body>
-    <h1>Quebra-cabeça</h1>
+    <h1 style="
+        margin-top: 20px; 
+        padding: 10px 20px; 
+        border: 2px solid rgb(136, 205, 233); 
+        background-color: rgba(255, 255, 255, 0.3); 
+        border-radius: 10px; 
+        text-align: center;">
+        US!!
+    </h1>
     <div id="puzzle-container"></div>
     <div id="pieces-container"></div>
     <button onclick="shufflePuzzle()">Embaralhar</button>
 
     <script>
-        const imageSrc = 'quebracabeça.PNG'; // Substitua pelo caminho da sua imagem
+        const imageSrc = 'us.jpg'; // Substitua pelo caminho da sua imagem
         const puzzleContainer = document.getElementById('puzzle-container');
         const piecesContainer = document.getElementById('pieces-container');
-        const pieceSize = 100;
-        const rows = 3; // Ajustado para 3 linhas
-        const cols = 3; // Ajustado para 3 colunas
+        const pieceWidth = 100;
+        const pieceHeight = 100;
+        const rows = 3;
+        const cols = 4;
         let pieces = [];
-        const occupiedSpaces = Array(rows * cols).fill(false); // Array para verificar quais espaços estão ocupados
+        const occupiedSpaces = Array(rows * cols).fill(false);
 
-        // Função para inicializar o quebra-cabeça
         function initPuzzle() {
-            // Adicionar quadradinhos ao tabuleiro
             for (let i = 0; i < rows * cols; i++) {
                 const square = document.createElement('div');
                 puzzleContainer.appendChild(square);
@@ -87,14 +94,12 @@
                 const piece = document.createElement('div');
                 piece.classList.add('puzzle-piece');
                 piece.style.backgroundImage = `url(${imageSrc})`;
-                piece.style.backgroundPosition = `${-(i % cols) * pieceSize}px ${-Math.floor(i / cols) * pieceSize}px`;
+                piece.style.backgroundPosition = `${-(i % cols) * pieceWidth}px ${-Math.floor(i / cols) * pieceHeight}px`;
                 piece.setAttribute('data-index', i);
 
-                // Inicializa as peças fora do tabuleiro (em áreas não visíveis)
                 piece.style.left = `${Math.random() * piecesContainer.offsetWidth}px`;
                 piece.style.top = `${Math.random() * piecesContainer.offsetHeight}px`;
 
-                // Adiciona eventos de arrastar e soltar
                 piece.addEventListener('mousedown', onMouseDown);
                 piece.addEventListener('touchstart', onTouchStart);
                 pieces.push(piece);
@@ -102,42 +107,37 @@
             }
         }
 
-        // Função para embaralhar as posições das peças
         function shufflePuzzle() {
             pieces.forEach(piece => {
-                let randLeft = Math.random() * (piecesContainer.offsetWidth - pieceSize);
-                let randTop = Math.random() * (piecesContainer.offsetHeight - pieceSize);
+                let randLeft = Math.random() * (piecesContainer.offsetWidth - pieceWidth);
+                let randTop = Math.random() * (piecesContainer.offsetHeight - pieceHeight);
 
-                // Garantir que as peças não apareçam dentro do tabuleiro
                 while (randLeft >= puzzleContainer.offsetLeft && randLeft <= puzzleContainer.offsetLeft + puzzleContainer.offsetWidth
                     && randTop >= puzzleContainer.offsetTop && randTop <= puzzleContainer.offsetTop + puzzleContainer.offsetHeight) {
-                    randLeft = Math.random() * (piecesContainer.offsetWidth - pieceSize);
-                    randTop = Math.random() * (piecesContainer.offsetHeight - pieceSize);
+                    randLeft = Math.random() * (piecesContainer.offsetWidth - pieceWidth);
+                    randTop = Math.random() * (piecesContainer.offsetHeight - pieceHeight);
                 }
 
                 piece.style.left = `${randLeft}px`;
                 piece.style.top = `${randTop}px`;
-                piece.classList.remove('placed'); // Remove a classe de colocada para recomeçar o jogo
+                piece.classList.remove('placed');
                 const index = parseInt(piece.getAttribute('data-index'));
-                occupiedSpaces[index] = false; // Libera o espaço ocupado
+                occupiedSpaces[index] = false;
             });
         }
 
-        // Função para iniciar arrasto em desktop
         function onMouseDown(event) {
             event.preventDefault();
             const piece = event.target;
             startDragging(piece, event.clientX, event.clientY);
         }
 
-        // Função para iniciar arrasto em dispositivos móveis
         function onTouchStart(event) {
             const piece = event.target;
             const touch = event.touches[0];
             startDragging(piece, touch.clientX, touch.clientY);
         }
 
-        // Função para iniciar arrasto de uma peça
         function startDragging(piece, startX, startY) {
             const initialLeft = parseFloat(piece.style.left);
             const initialTop = parseFloat(piece.style.top);
@@ -164,21 +164,12 @@
             document.addEventListener('touchend', onMouseUp);
         }
 
-        // Função para verificar se a peça está dentro da área do tabuleiro
         function checkPlacement(piece) {
             const pieceRect = piece.getBoundingClientRect();
             const boardRect = puzzleContainer.getBoundingClientRect();
             const index = parseInt(piece.getAttribute('data-index'));
-
-            // Remover a classe .placed se a peça for retirada do tabuleiro
-            if (piece.classList.contains('placed')) {
-                piece.classList.remove('placed');
-            }
-
-            // Defina uma margem de tolerância maior (por exemplo, 20px)
             const tolerance = 20;
 
-            // Checa se a peça está dentro da área do tabuleiro e se o espaço está vazio, considerando a margem de tolerância
             if (
                 pieceRect.left >= boardRect.left - tolerance &&
                 pieceRect.right <= boardRect.right + tolerance &&
@@ -186,34 +177,28 @@
                 pieceRect.bottom <= boardRect.bottom + tolerance &&
                 !occupiedSpaces[index]
             ) {
-                // Ajusta para o grid mais próximo, considerando a tolerância
-                const xPos = Math.round((pieceRect.left - boardRect.left) / pieceSize) * pieceSize;
-                const yPos = Math.round((pieceRect.top - boardRect.top) / pieceSize) * pieceSize;
+                const xPos = Math.round((pieceRect.left - boardRect.left) / pieceWidth) * pieceWidth;
+                const yPos = Math.round((pieceRect.top - boardRect.top) / pieceHeight) * pieceHeight;
 
-                // Define a posição da peça no grid do tabuleiro e marca o espaço como ocupado
                 piece.style.left = `${xPos}px`;
                 piece.style.top = `${yPos}px`;
                 piece.style.position = 'absolute';
                 puzzleContainer.appendChild(piece);
                 piece.classList.add('placed');
                 occupiedSpaces[index] = true;
-
             } else {
-                // Caso não esteja na posição correta ou espaço já ocupado, libera a posição
                 occupiedSpaces[index] = false;
             }
 
             checkPuzzleCompletion();
         }
 
-        // Função para verificar se o quebra-cabeça está completo
         function checkPuzzleCompletion() {
             const isComplete = pieces.every(piece => {
                 const index = parseInt(piece.getAttribute('data-index'));
-                const expectedPositionX = (index % cols) * pieceSize;
-                const expectedPositionY = Math.floor(index / cols) * pieceSize;
+                const expectedPositionX = (index % cols) * pieceWidth;
+                const expectedPositionY = Math.floor(index / cols) * pieceHeight;
 
-                // Verifica se a peça está na posição correta (com tolerância)
                 return (
                     Math.abs(parseFloat(piece.style.left) - expectedPositionX) < 10 &&
                     Math.abs(parseFloat(piece.style.top) - expectedPositionY) < 10
@@ -225,7 +210,6 @@
             }
         }
 
-        // Inicializa o quebra-cabeça na primeira execução
         initPuzzle();
     </script>
 </body>
