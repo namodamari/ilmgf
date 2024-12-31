@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporizador</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fdc2df; /* Fundo rosa claro */
+            font-family: Arial, sans-serif;
+            color: #f09eec; /* Texto rosa escuro */
+        }
+
+        .timer-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 300px;
+            height: 200px;
+            background-color: #ffdff8; /* Fundo do quadrado */
+            border: 5px solid #e799ff; /* Cor da borda */
+            border-radius: 15px; /* Bordas arredondadas */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+            text-align: center;
+        }
+
+        .timer-container h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            padding-bottom: 10px;
+        }
+
+        .timer-container p {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        // Define a data e hora de destino
+        const targetDate = new Date("2025-01-01T00:00:00");
+
+        // Função para atualizar o temporizador
+        function updateTimer() {
+            const now = new Date();
+            const timeLeft = targetDate - now;
+
+            if (timeLeft <= 0) {
+                // Redireciona para a nova página quando o tempo acabar
+                window.location.href = "https://exemplo.com/nova-pagina";
+                return;
+            }
+
+            // Calcula dias, horas, minutos e segundos restantes
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            // Atualiza o conteúdo da página
+            document.getElementById("timer").textContent =
+                `${days}D ${hours}H ${minutes}M ${seconds}S!!`;
+        }
+
+        // Atualiza o temporizador a cada segundo
+        setInterval(updateTimer, 1000);
+    </script>
+</head>
+<body>
+    <div class="timer-container">
+        <h1>FALTAM APENAS</h1>
+        <p id="timer">Carregando...</p>
+    </div>
+</body>
+</html>
