@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/opendyslexic/1.0.0/opendyslexic.min.css">
+    <style>
+        /* Previous CSS remains the same until .cover-front and .cover-back */
+        :root {
+            --book-cover-color: #8b4513;
+            --book-spine-color: #623010;
+            --book-border-color: #daa520;
+            --book-width: 350px;
+            --book-height: 500px;
+        }
+
+        .book-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f0f0f0;
+            perspective: 1000px;
+            padding: 50px;
+        }
+
+        .book {
+            position: relative;
+            width: var(--book-width);
+            height: var(--book-height);
+            transform-style: preserve-3d;
+        }
+
+        .cover {
+            position: absolute;
+            width: calc(var(--book-width) + 40px);
+            height: calc(var(--book-height) + 20px);
+            transform-origin: left center;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+            cursor: pointer;
+            left: -20px;
+            top: -10px;
+        }
+
+        .cover.flipped {
+            transform: rotateY(-180deg);
+        }
+
+        /* Modified cover sides to include both front and back for each cover */
+        .cover-side {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            background: var(--book-cover-color);
+            border: 2px solid var(--book-border-color);
+            box-shadow: 
+                inset 4px 0 10px rgba(0,0,0,0.1),
+                0 0 15px rgba(0,0,0,0.2);
+            box-sizing: border-box;
+            padding: 20px;
+        }
+
+        .cover-side.back {
+            transform: rotateY(180deg);
+            background: var(--book-cover-color);
+        }
+
+        .cover-side::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 100%;
+            background: var(--book-spine-color);
+            transform: translateX(-15px);
+            box-shadow: 5px 0 10px rgba(0,0,0,0.2);
+        }
+
+        .cover-photo {
+            width: 80%;
+            height: 60%;
+            margin: 40px auto 20px;
+            border: 5px solid var(--book-border-color);
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .cover-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cover-title {
+            text-align: center;
+            color: var(--book-border-color);
+            font-size: 28px;
+            margin-top: 20px;
+            font-family: 'OpenDyslexic', "Times New Roman", serif;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            letter-spacing: 0.5px;
+        }
+
+        /* Rest of the CSS remains the same */
+        .page {
+            position: absolute;
+            width: var(--book-width);
+            height: var(--book-height);
+            cursor: pointer;
+            transform-origin: left center;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .page.flipped {
+            transform: rotateY(-180deg);
+        }
+
+        .page-front, .page-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            background: #FFFFE0;
+            padding: 20px;
+            box-sizing: border-box;
+            background-image: linear-gradient(#e1e1e1 1px, transparent 1px);
+            background-size: 100% 35px;
+            line-height: 35px;
+            font-family: 'OpenDyslexic', Arial, sans-serif;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            word-spacing: 3px;
+            color: #333333;
+        }
+
+        .page-back {
+            transform: rotateY(180deg);
+        }
+
+        .page::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(to right, #d4d4d4, white);
+        }
+
+        /* Added styles for dyslexia-friendly text */
+        .page-front h2, .page-back h2 {
+            font-family: 'OpenDyslexic', Arial, sans-serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #2C3E50;
+            line-height: 1.4;
+        }
+
+        .page-front p, .page-back p {
+            margin-bottom: 25px;
+        }
+
+        a {
+            color: #2C3E50;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        a:hover {
+            background-color: #FFE4B5;
+        }
+    </style>
+</head>
+<body>
+    <div class="book-container">
+        <div class="book">
+            <!-- Front Cover -->
+            <div class="cover" onclick="flipPage(this)" data-page="0">
+                <div class="cover-side">
+                    <div class="cover-photo">
+                        <img src="cover.jpg" alt="Cover Photo">
+                    </div>
+                    <div class="cover-title">A ESTRADA ATÉ AQUI!</div>
+                </div>
+                <div class="cover-side back">
+                    <div class="cover-title">eu amo você.</div>
+                </div>
+            </div>
+
+            <!-- Pages -->
+            <div class="page" onclick="flipPage(this)" data-page="1">
+                <div class="page-front">
+                    <h2>A exatamente 8 meses atrás, você estava falando de casamento colombiano.</h2>
+                    <p>eu lembro como se fosse hoje, os seus olhos brilhando enquanto falava comigo, o seu nervosismo. o seu cabelo estava perfeito, você era tudo que existia pra mim naquele momento, você estava perfeita. dado 
+                        certo momento, minha admiração foi tanta que eu sabia que precisava mais do que admirar, eu precisava possuir.  </p>
+                </div>
+                <div class="page-back">
+                   eu precisava que você fosse minha, e po,
+                        era a única coisa na minha mente. pareceu certo perguntar; você quer namorar comigo?                                                                           
+                         sua hesitação ao responder, a forma que gaguejou, e o absurdo de eu ter que perguntar de novo, quem diria que isso ia resultar em toda essa história?
+                    
+                </div>
+            </div>
+            <div class="page" onclick="flipPage(this)" data-page="2">
+                <div class="page-front">
+                    <h2>Do jeito que sempre sonhei.</h2>
+                    <p>você lembra quando eu falava constantemente "antes de te conhecer, eu já sonhava com você"? nossa, isso sempre foi TÃO real, você é tudo que eu sempre quis sabe? tudo que eu sonhei, isso nunca mudou. "ah matheus que n sei oq n sei oq la" nao foda ok? você é perfeita, ninguém poderia se importar comigo da forma que você se importa, ninguém poderia sentir tanto quanto você, ninguém </p>
+                </div>
+                <div class="page-back">
+                    
+                    <p>poderia ser uma mãe melhor pros meus filhos, ninguém poderia beijar minha cara toda a força do jeito que você beija, ninguém poderia assoprar minha boca!!</p>
+                    <p>você é a pessoa mais incrível que eu já conheci, a garota mais bonita do mundo. você é pura arte parça, a minha princesinha encantada!</p>
+                    <p>eu amo <a href="https://namodamari.github.io/ilmgf/gerador.html" target="_blank" style="text-decoration: none;">TUDO</a> sobre você! e tudo mesmo! eu amo o jeito que você se dedica, eu amo a forma que você 
+                    
+                </div>
+            </div>
+            <div class="page" onclick="flipPage(this)" data-page="3">
+                <div class="page-front">
+                     sonha, eu amo o quanto se esforça, isso tudo sempre
+                        acaba refletindo em mim saca? você é meu ídolo po, e
+                    eu sou apaixonado por você. fascinado. fascinado pela sua beleza, pela forma que os seus olhos me cativam, fascinado pela sua alma, a sua arte, suas GRANDES obras. eu amo quando você começa a falar empolgada sobre algo que gosta, eu amo ver você fazendo qualquer coisa, desde apanhar da dandara até fazer uma maquiagem MUITO legal. eu amo quando você me conta coisas, </p>
+                </div>
+                <div class="page-back">
+                    <p> e eu me sinto tãoooooo especial, me sinto seu namorado sabe? e o seu melhor amigo!! eu amo quando a gente joga, conversa, se diverte em geral,  eu amo a sua paixão, sabe? o jeito que você é apaixonada pelo que gosta, a sua chama é tão atraente, eu odeio sentir que poderia estar apagando ela porque eu me apaixonei por isso também, sabe?</p>
+                </div>
+            </div>
+            <div class="page" onclick="flipPage(this)" data-page="4">
+                <div class="page-front">
+                    <h2>Garantia.</h2>
+                    <p>você é minha certeza absoluta, tem sido assim a muito tempo e vai continuar sendo. eu tenho certeza de que quero você, quero ter você pro resto da vida, e isso é o que me mantém vivo de verdade. ainda que meus órgãos declarassem falência, que os vermes comessem o meu cadáver, eu continuaria sendo seu e te querendo pra sempre, é essa fita que eu quero dizer quando falo de certeza absoluta sabe?</p>
+                    
+                </div>
+                <div class="page-back">
+                    <p>"ah matheus, mas a gente ta sempre quase terminando e n sei oq n sei oq la" uma coisa nao tem NADA a ver com a outra!!! eu nunca vou perder essa certeza específica, te garanto isso. é como você disse antes, posso ter errado de vida mas não de amor.</p>
+                    <p>não existe nada mais real do que a sensação do meu coração quente, ardendo de amor. a necessidade absurda, como se eu fosse um drogado em abstinência, de te</p>
+                </div>
+            </div>
+            <div class="page" onclick="flipPage(this)" data-page="5">
+                <div class="page-front">
+                    
+                    <p> ver, te consumir, te tocar, te dar carinho e afeto. sabe quando viciado troca de cocaína pra metadona pra não morrer tão cedo? ta, exemplo muito extremo, é mais fácil comparar fumante que troca o cigarro por aqueles chicletes. não existe no mundo algo que poderia substituir o meu sentimento, eu não conseguiria essa metadona ou chiclete sabe? por isso NUNCA vai fazer sentido você dizer que eu estaria melhor ou mais feliz sem você. quando a vida tá </p>
+                </div>
+                <div class="page-back">
+                    <p>dificil, você não se mata sabe? (alguns sim mas me escuta ok) você muda, melhora. perder você seria perder a minha vida, a minha razão de estar vivo, eu estaria só sobrevivendo.</p>
+                    <p>
+                        é você quem eu vou passar o resto da minha vida, e eu já decidi isso então não é discutível. quem mais seria a mãe dos meus filhos??? como assim eu não chegaria em casa e te veria toda suja de tinta pintando um 
+                    </p>
+                </div>
+            </div>
+            <div class="page" onclick="flipPage(this)" data-page="6">
+                <div class="page-front">
+                    <p>quadro lindo que eu botaria na parede junto das centenas de pinturas suas? porra, vai me dizer que você não enxerga a gente crescendo, construindo nossa vida juntos? lado a lado? conquistando as nossas coisas, nossos empregos, passando (ou sendo rejeitados)nos nossos concursos, tudo isso unidos? podendo chegar em casa, comer alguma besteira e depois deitar encostando 100% do corpo um no outro? pois eu mato, vivo e morro por isso.</p>
+                </div>
+                <div class="page-back">
+                    <h2>8.</h2>
+                    <p>fazem 8 meses que você é o amor da minha vida, 8 meses que eu me reapaixono todos os dias, 8 meses que eu te amo todas as horas do dia. você é minha, mari, nada vai mudar isso, nunca. eu sou LOUCO por você, eu vou fazer de tudo pra não te perder apesar das minhas falhas, você é tudo pra mim, minha garota bonita! </p>
+                    <p>4:47.</p>
+                </div>
+            </div>
+
+            <!-- Back Cover -->
+            <div class="cover" onclick="flipPage(this)" data-page="7">
+                <div class="cover-side">
+                    <div class="cover-title">assinado, seu garoto de programa!
+                        ♥
+                    </div>
+                </div>
+                <div class="cover-side back">
+                    <div class="cover-title">♥08/05.♥</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const elements = document.querySelectorAll('.cover, .page');
+        
+        function updateZIndices() {
+            elements.forEach((el, index) => {
+                if (el.classList.contains('flipped')) {
+                    el.style.zIndex = index;
+                } else {
+                    el.style.zIndex = elements.length - index;
+                }
+            });
+        }
+
+        function flipPage(element) {
+            const pageNumber = parseInt(element.dataset.page);
+            
+            elements.forEach((el) => {
+                const elPageNumber = parseInt(el.dataset.page);
+                if (elPageNumber < pageNumber) {
+                    el.classList.add('flipped');
+                } else if (elPageNumber > pageNumber) {
+                    el.classList.remove('flipped');
+                } else {
+                    el.classList.toggle('flipped');
+                }
+            });
+            
+            updateZIndices();
+        }
+
+        // Initialize z-indices
+        updateZIndices();
+    </script>
+</body>
+</html>

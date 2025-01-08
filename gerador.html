@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .reason-box {
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            background: #ffdede;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .generate-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: hsl(0, 100%, 63%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .generate-btn:hover {
+            background: #ff2d55;
+        }
+
+        .heart {
+            color: #ff4b6e;
+            font-size: 24px;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>reasons para lovar você!<span class="heart">♥</span></h1>
+        <div class="reason-box" id="reasonDisplay">
+            porque você é minha.
+        </div>
+        <button class="generate-btn" onclick="generateReason()">mostrar motivos!</button>
+    </div>
+
+    <script>
+        const reasons = [
+            "porque você é a garota mais bonita do mundo",
+            "o jeito que os seus olhinhos quase fecham quando você sorri",
+            "a sua paciência e resiliencia em me aguentar(nao é mole nao)",
+            "2 estaduais (autoexplicativo)",
+            "você é a pessoa mais inteligente do mundo",
+            "seu cabelo é PERFEITO, os seus cachos, nossa nossa nossa",
+            "seus olhos me alucinam, sua boca me deixa sem fôlego",
+            "as fotos com cara de sapeca que você manda",
+            "a cor dos seus olhos é a minha cor favorita, eles são ARTE!",
+            "é a coisa mais fácil do meu dia a dia! a mais difícil é estar longe de você.",
+            "a forma que se importa comigo, com a gente.",
+            "o seu corpo é muito bem esculpido ok (tentei nao assediar ao MAXIMO)",
+            "você COM CERTEZA vai ser uma ótima mãe!!! isso vale por um milhão de motivos.",
+            "você é minha razão de viver.",
+            "você é minha pessoa FAVORITA!",
+            "você é minha família favorita e família é muita coisa.",
+            "o jeito que você controla o tempo, quando to contigo ele acelera e quando to longe ele fica taaaaao lento",
+            "suas orelhas, canelas e pés (sem fazer perguntas por favor)",
+            "fazer carinho e enfiar minha cara na sua barriga(paraíso)",
+            "você é muito boa de morder!!!!!",
+            "te apertar é terapeutico ok, sua pele é TÃO estupidamente macia e delicada, sempre sinto que vou te rasgar!",
+            "TE LEVANTAR LA NO AR É MUUUUUUITO LEGAL, E TE GIRAR TAMBÉM",
+            "o seu molejo absurdo..........",
+            "a sua paixão por livros, o jeito que você me fala sobre eles, o brilho no seu olho, porra, isso é viciante.",
+            "quando to com você, nada parece ser tãoo problemático assim, a vida fica tão fácil; é só te encher de beijos e abraços e fica tuuudo bem (ou ficar te olhando igual um maniaco)",
+            "o seu sorriso me deixa MOLE parça, minha pressao cai e os caralhos",
+            "o meu corpo e o seu também estão apaixonados",
+            ""
+        ];
+
+        // Track counts and last shown index
+        let reasonCounts = new Array(reasons.length).fill(0);
+        let lastShownIndex = -1;
+
+        function generateReason() {
+            const reasonDisplay = document.getElementById('reasonDisplay');
+            
+            // Calculate weights with strong penalty for repeats
+            const weights = reasonCounts.map((count, index) => {
+                // Extra penalty for the last shown reason
+                if (index === lastShownIndex) {
+                    return 0.01; // Very low chance of immediate repeat
+                }
+                // Exponential decrease in probability based on show count
+                return Math.pow(0.2, count); // Base of 0.2 means each show reduces chance by 80%
+            });
+            
+            const totalWeight = weights.reduce((a, b) => a + b, 0);
+            let random = Math.random() * totalWeight;
+            let selectedIndex = 0;
+            
+            // Select an index based on weights
+            for (let i = 0; i < weights.length; i++) {
+                random -= weights[i];
+                if (random <= 0) {
+                    selectedIndex = i;
+                    break;
+                }
+            }
+            
+            // Update tracking
+            reasonCounts[selectedIndex]++;
+            lastShownIndex = selectedIndex;
+            
+            // Add fade effect
+            reasonDisplay.style.opacity = 0;
+            
+            setTimeout(() => {
+                reasonDisplay.textContent = reasons[selectedIndex];
+                reasonDisplay.style.opacity = 1;
+            }, 200);
+        }
+    </script>
+</body>
+</html>
