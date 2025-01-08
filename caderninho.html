@@ -174,10 +174,50 @@
         a:hover {
             background-color: #FFE4B5;
         }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            :root {
+                --book-width: 250px;
+                --book-height: 350px;
+            }
+
+            .book-container {
+                padding: 20px;
+            }
+
+            .cover {
+                width: calc(var(--book-width) + 30px);
+                height: calc(var(--book-height) + 15px);
+                left: -15px;
+                top: -7.5px;
+            }
+
+            .cover-photo {
+                width: 90%;
+                height: 50%;
+                margin: 20px auto 10px;
+            }
+
+            .cover-title {
+                font-size: 20px;
+            }
+
+            .page {
+                font-size: 14px;
+            }
+
+            .page-front h2, .page-back h2 {
+                font-size: 20px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- HTML original completamente preservado -->
     <div class="book-container">
+        <div class="book">
+            <!-- Covers and pages go here --><div class="book-container">
         <div class="book">
             <!-- Front Cover -->
             <div class="cover" onclick="flipPage(this)" data-page="0">
@@ -276,7 +316,8 @@
             </div>
         </div>
     </div>
-
+        </div>
+    </div>
     <script>
         const elements = document.querySelectorAll('.cover, .page');
         
