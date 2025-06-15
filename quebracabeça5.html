@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
             flex-direction: column;
             align-items: center;
             font-family: Arial, sans-serif;
-            background-image: url('casinha.png'); /* Substitua aqui pelo caminho da sua imagem de fundo */
+            background-image: url('casinha.png');
             background-size: cover;
             background-position: center;
             height: 100vh;
@@ -19,11 +19,11 @@
 
         #puzzle-container {
             position: relative;
-            width: 400px; /* Ajuste para maior largura */
-            height: 300px; /* Altura proporcional à largura */
+            width: 400px;
+            height: 300px;
             display: grid;
-            grid-template-columns: repeat(4, 100px); /* 4 colunas */
-            grid-template-rows: repeat(3, 100px); /* 3 linhas */
+            grid-template-columns: repeat(4, 100px);
+            grid-template-rows: repeat(3, 100px);
             gap: 2px;
             margin-top: 20px;
             padding: 2px;
@@ -47,7 +47,7 @@
         .puzzle-piece {
             width: 100px;
             height: 100px;
-            background-size: 400px 300px; /* Tamanho da imagem ajustado ao tabuleiro */
+            background-size: 400px 300px;
             position: absolute;
             cursor: pointer;
             transition: transform 0.3s ease;
@@ -74,7 +74,7 @@
     <button onclick="shufflePuzzle()">Embaralhar</button>
 
     <script>
-        const imageSrc = 'us5.jpg'; // Substitua pelo caminho da sua imagem
+        const imageSrc = 'us5.jpg';
         const puzzleContainer = document.getElementById('puzzle-container');
         const piecesContainer = document.getElementById('pieces-container');
         const pieceWidth = 100;
@@ -205,11 +205,11 @@
                 );
             });
 
-            if (isComplete) 
+            if (isComplete) {
                 alert('VC COMPLETOU TOOOODOS ELES!!!! por enquanto eu não adicionei mais :( eu sou um bobao vacilao mas espero que tenha gostado!! ');
                 window.location.href = 'https://namodamari.github.io/ilmgf/castelo.html';
             }
-        
+        }
 
         initPuzzle();
     </script>
