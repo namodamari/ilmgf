@@ -1,0 +1,217 @@
+<!DOCTYPE html> 
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DLC QUEBRA CABEÇA!</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-image: url('dlcfundo.png');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #puzzle-container {
+            position: relative;
+            width: 400px;
+            height: 300px;
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 2px;
+            margin-top: 20px;
+            padding: 2px;
+            border-radius: 10px;
+            background-color: #f8f8f8;
+            border: 4px solid rgb(156, 217, 241);
+        }
+
+        #pieces-container {
+            position: relative;
+            width: 400px;
+            height: 300px;
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px;
+            padding: 2px;
+            border-radius: 10px;
+        }
+
+        .puzzle-piece {
+            width: 100px;
+            height: 100px;
+            background-size: 400px 300px;
+            position: absolute;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            touch-action: none;
+        }
+
+        .placed {
+            border: 2px solid rgb(129, 255, 249);
+        }
+    </style>
+</head>
+<body>
+    <h1 style="
+        margin-top: 20px; 
+        padding: 10px 20px; 
+        border: 2px solid rgb(136, 205, 233); 
+        background-color: rgba(255, 255, 255, 0.3); 
+        border-radius: 10px; 
+        text-align: center;">
+        US!!
+    </h1>
+    <div id="puzzle-container"></div>
+    <div id="pieces-container"></div>
+    <button onclick="shufflePuzzle()">embaralhar!</button>
+
+    <script>
+        const imageSrc = 'dlc7.jpg';
+        const puzzleContainer = document.getElementById('puzzle-container');
+        const piecesContainer = document.getElementById('pieces-container');
+        const pieceWidth = 100;
+        const pieceHeight = 100;
+        const rows = 3;
+        const cols = 4;
+        let pieces = [];
+        const occupiedSpaces = Array(rows * cols).fill(false);
+
+        function initPuzzle() {
+            for (let i = 0; i < rows * cols; i++) {
+                const square = document.createElement('div');
+                puzzleContainer.appendChild(square);
+            }
+
+            for (let i = 0; i < rows * cols; i++) {
+                const piece = document.createElement('div');
+                piece.classList.add('puzzle-piece');
+                piece.style.backgroundImage = `url(${imageSrc})`;
+                piece.style.backgroundPosition = `${-(i % cols) * pieceWidth}px ${-Math.floor(i / cols) * pieceHeight}px`;
+                piece.setAttribute('data-index', i);
+
+                piece.style.left = `${Math.random() * piecesContainer.offsetWidth}px`;
+                piece.style.top = `${Math.random() * piecesContainer.offsetHeight}px`;
+
+                piece.addEventListener('mousedown', onMouseDown);
+                piece.addEventListener('touchstart', onTouchStart);
+                pieces.push(piece);
+                piecesContainer.appendChild(piece);
+            }
+        }
+
+        function shufflePuzzle() {
+            pieces.forEach(piece => {
+                let randLeft = Math.random() * (piecesContainer.offsetWidth - pieceWidth);
+                let randTop = Math.random() * (piecesContainer.offsetHeight - pieceHeight);
+
+                while (randLeft >= puzzleContainer.offsetLeft && randLeft <= puzzleContainer.offsetLeft + puzzleContainer.offsetWidth
+                    && randTop >= puzzleContainer.offsetTop && randTop <= puzzleContainer.offsetTop + puzzleContainer.offsetHeight) {
+                    randLeft = Math.random() * (piecesContainer.offsetWidth - pieceWidth);
+                    randTop = Math.random() * (piecesContainer.offsetHeight - pieceHeight);
+                }
+
+                piece.style.left = `${randLeft}px`;
+                piece.style.top = `${randTop}px`;
+                piece.classList.remove('placed');
+                const index = parseInt(piece.getAttribute('data-index'));
+                occupiedSpaces[index] = false;
+            });
+        }
+
+        function onMouseDown(event) {
+            event.preventDefault();
+            const piece = event.target;
+            startDragging(piece, event.clientX, event.clientY);
+        }
+
+        function onTouchStart(event) {
+            const piece = event.target;
+            const touch = event.touches[0];
+            startDragging(piece, touch.clientX, touch.clientY);
+        }
+
+        function startDragging(piece, startX, startY) {
+            const initialLeft = parseFloat(piece.style.left);
+            const initialTop = parseFloat(piece.style.top);
+
+            function onMouseMove(e) {
+                const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+                const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+                piece.style.left = `${initialLeft + clientX - startX}px`;
+                piece.style.top = `${initialTop + clientY - startY}px`;
+            }
+
+            function onMouseUp() {
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+                document.removeEventListener('touchmove', onMouseMove);
+                document.removeEventListener('touchend', onMouseUp);
+
+                checkPlacement(piece);
+            }
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+            document.addEventListener('touchmove', onMouseMove);
+            document.addEventListener('touchend', onMouseUp);
+        }
+
+        function checkPlacement(piece) {
+            const pieceRect = piece.getBoundingClientRect();
+            const boardRect = puzzleContainer.getBoundingClientRect();
+            const index = parseInt(piece.getAttribute('data-index'));
+            const tolerance = 20;
+
+            if (
+                pieceRect.left >= boardRect.left - tolerance &&
+                pieceRect.right <= boardRect.right + tolerance &&
+                pieceRect.top >= boardRect.top - tolerance &&
+                pieceRect.bottom <= boardRect.bottom + tolerance &&
+                !occupiedSpaces[index]
+            ) {
+                const xPos = Math.round((pieceRect.left - boardRect.left) / pieceWidth) * pieceWidth;
+                const yPos = Math.round((pieceRect.top - boardRect.top) / pieceHeight) * pieceHeight;
+
+                piece.style.left = `${xPos}px`;
+                piece.style.top = `${yPos}px`;
+                piece.style.position = 'absolute';
+                puzzleContainer.appendChild(piece);
+                piece.classList.add('placed');
+                occupiedSpaces[index] = true;
+            } else {
+                occupiedSpaces[index] = false;
+            }
+
+            checkPuzzleCompletion();
+        }
+
+        function checkPuzzleCompletion() {
+            const isComplete = pieces.every(piece => {
+                const index = parseInt(piece.getAttribute('data-index'));
+                const expectedPositionX = (index % cols) * pieceWidth;
+                const expectedPositionY = Math.floor(index / cols) * pieceHeight;
+
+                return (
+                    Math.abs(parseFloat(piece.style.left) - expectedPositionX) < 10 &&
+                    Math.abs(parseFloat(piece.style.top) - expectedPositionY) < 10
+                );
+            });
+
+            if (isComplete) {
+                alert('fim da DLC!! espero que tenha gostado :)))');
+                window.location.href = 'https://namodamari.github.io/ilmgf/dlc.html';
+            }
+        }
+
+        initPuzzle();
+    </script>
+</body>
+</html>
