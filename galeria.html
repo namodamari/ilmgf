@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galeria Interativa Responsiva</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        
+        /* Imagem de fundo personalizada */
+        background-color: pink;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        
+        /* Filtro suave para dar contraste ao conteúdo */
+        backdrop-filter: blur(3px);
+    }
+
+    h1 {
+        text-align: center;
+        color: white;
+        text-shadow: rgba(0, 0, 0, 0.75) 0px 3px 8px;
+    }
+
+    .galeria {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .item {
+        position: relative;
+        flex: 1;
+        min-width: 200px;
+        transition: flex 0.5s ease, max-width 0.5s ease;
+        overflow: hidden;
+        border-radius: 10px;
+        cursor: pointer;
+        max-width: 250px;
+    }
+
+    .item img {
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .conteudo {
+        position: absolute;
+        bottom: 15px;
+        left: 15px;
+        right: 15px;
+        color: white;
+        transform: translateY(100%);
+        transition: transform 0.4s ease, opacity 0.4s ease;
+        font-size: 14px;
+        text-shadow: rgba(0, 0, 0, 0.75) 0px 3px 8px;
+        opacity: 0;
+    }
+
+    .conteudo h3 {
+        margin: 0 0 5px;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .item.ativo {
+        flex: 2;
+        max-width: 500px;
+    }
+
+    .item.ativo img {
+        transform: scale(1.1);
+    }
+
+    .item.ativo .conteudo {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    @media (hover:hover) {
+        .item:hover {
+            flex: 2;
+            max-width: 500px;
+        }
+        .item:hover img {
+            transform: scale(1.1);
+        }
+        .item:hover .conteudo {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .galeria {
+            flex-direction: column;
+            align-items: center;
+        }
+        .item {
+            width: 100%;
+            max-width: none;
+        }
+        .item img {
+            height: 250px;
+        }
+        .conteudo {
+            font-size: 16px;
+        }
+    }
+    .caxa{
+        border: 6px solid #ff4;
+        border-radius: 10px;
+        margin: 10px;
+        padding: 10px;
+        background-color: aliceblue;
+        
+    }
+    h1{
+        color: rgb(255, 255, 103);
+    }
+    .caixa{
+      border: 6px solid #ff4;
+        border-radius: 10px;
+        margin: 10px;
+        padding: 10px;
+        background-color: aliceblue;
+        
+    }
+</style>
+</head>
+<body>
+
+<div class="caxa">
+    <h1>GALERIA MAGICA!!!</h1>
+</div><div class="caixa">
+    
+    <div class="galeria">
+        <div class="item">
+            <img src="https://media.discordapp.net/attachments/1411159194253529159/1414349038290993162/PXL_20250226_095426216.jpg?ex=68bf3eb0&is=68bded30&hm=978dcee433d3f0a314c52cac354e679bccad3b5421a9d1c00adacc697b740336&=&format=webp&width=638&height=479" alt="Gato 1">
+            <div class="conteudo">
+                <h3>MARI ESTRELADA DE MATHEUS GOGH</h3>
+                <p>uma verdadeira obra de arte!! eu AMO essa foto, MUITO! você estava tão linda nesse dia e fica perfeita com esse vestido! tirando a parte de mostrar os seios pra todo mundo..</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="https://media.discordapp.net/attachments/1411159194253529159/1414349036659540151/PXL_20250521_095731401.jpg?ex=68bf3eaf&is=68bded2f&hm=73575e90562f673aa33f4146abee6daf3afa62424159624eb9aca339502bb3c2&=&format=webp&width=359&height=479" alt="Gato 2">
+            <div class="conteudo">
+                <h3>PRAIA!</h3>
+                <p>MEU DEUS OLHA O SORRISAO Q VC TAVA TIPO??? vc brincou MUITO! eu tava muito feliz com a sua felicidade, essa é uma das minhas fotos favoritas! parece até que eu te faço bem nela ok</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="https://media.discordapp.net/attachments/1411159194253529159/1414349039398420480/20250614_091712.jpg?ex=68bf3eb0&is=68bded30&hm=a7ca0b701d6f86e8d846a8ddf3102fb145233a440a6f47e920e618315b75dc7b&=&format=webp&width=359&height=479" alt="Gato 3">
+            <div class="conteudo">
+                <h3>AMARELINHOS NA BIENAL.</h3>
+                <p>O DIA DA BIENAL FOI TAO TAO LEGAL MEU DEUS EU SINTO MUITA FALTA DO MEU BOLO 😭😭😭 eu adorei passear com você na bienal ok dava pra fazer uma galeria só de fotos de lá inclusive mas eu gosto muito dessa</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="https://media.discordapp.net/attachments/1411159194253529159/1414349037120917616/PXL_20250505_083129124.jpg?ex=68bf3eaf&is=68bded2f&hm=584f68be552dee5802747a5246106d9edbe9f9333cf49fe93d52251d94703bce&=&format=webp&width=359&height=479" alt="Gato 4">
+            <div class="conteudo">
+                <h3>NO CENTRO!! PARTE 1 </h3>
+                <p>QUANDOA  GENTE FOI NO CENTRO E EU COMI 1 MILHAO DE COISAS E COMI BROWNIE E TUDO MUITO LEGAL MUITO </p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="https://media.discordapp.net/attachments/1411159194253529159/1414349036181393499/20250505_104827.jpg?ex=68bf3eaf&is=68bded2f&hm=6282fdf6e951b2750d93c47d805f918bb767aafe757e6670f4d0a84c95a59362&=&format=webp&width=638&height=479" alt="Gato 4">
+            <div class="conteudo">
+                <h3>NO CENTRO PARTE 2 </h3>
+                <p>JA FALEI Q EU COMI DE TUDO ENSSE DIA??? eu amo essa foto dos nossos pes juntos meu deus é tipo tao eu e vc na minha cabeça pprt eu acho muito midia.</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="https://media.discordapp.net/attachments/1411159194253529159/1414349035711627384/20250718_112623.jpg?ex=68bf3eaf&is=68bded2f&hm=d0eaee0584e00805a10eea67a4b4eab71f9e080f37e7f122d5b487ab6b88910e&=&format=webp&width=359&height=479" alt="Gato 4">
+            <div class="conteudo">
+                <h3>XUXU.</h3>
+                <p>O NASCIMENTO. DO. XUXU. ACHO QUE VOCE NEM TAVA PREPARADA NESSE DIA.... espero que o xuxu ainda seja importante ok pq vc fala menos dele e vejo menos foto sua com ele mas vou fignir que nao percebo....</p>
+            </div>
+    
+        </div>
+         <div class="item">
+            <img src="https://media.discordapp.net/attachments/1411159194253529159/1414349038932725902/PXL_20250521_153258140.jpg?ex=68bf3eb0&is=68bded30&hm=35f2077ff6ea38be15202b857825a0f006437b61f04efeb6f46e703d80221ba4&=&format=webp&width=638&height=479" alt="Gato 5">
+            <div class="conteudo">
+                <h3>DOUBLE DECKER BUS!!</h3>
+                <p>FOI MUITO LEGAL ESSE LUGAR AI Q NOIS TAVA TINHA TUDO TINHA PARIS TINHA FRANÇA ALEMANHA TUDO MUITO LEGAL TINHA TORRE WAFER E A GENTE AINDA TINHA IDO NA PRAIA ANTES MEU DEUS ESSE DIA FOI MUITO LEGAL E EU COMI MACARRONESE E DOCE</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="https://media.discordapp.net/attachments/1411159194253529159/1414350425909493875/IMG_20250206_180907_872.jpg?ex=68bf3ffa&is=68bdee7a&hm=9ad094024191cb2b2bb8aaf58f6eae46909eb8fa3fac8860d4cd695f71912c60&=&format=webp&width=479&height=479" alt="Gato 5">
+            <div class="conteudo">
+                <h3>PARK SHOPPING!</h3>
+                <p>ESSA FOTO REPRESENTA TODAS AS NOSSAS IDAS AO PARK SHOPPING OK NGM CONHECE O PARK SHOPPING COMO A GENTE LA É NOSSO TOP DATE OFICIAL E EU AMO IR COM VOCE É SEMPRE MT LEGAL PASSEAR</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="https://media.discordapp.net/attachments/1411159194253529159/1414350425909493875/IMG_20250206_180907_872.jpg?ex=68bf3ffa&is=68bdee7a&hm=9ad094024191cb2b2bb8aaf58f6eae46909eb8fa3fac8860d4cd695f71912c60&=&format=webp&width=479&height=479" alt="Gato 5">
+            <div class="conteudo">
+                <h3>PARK SHOPPING!</h3>
+                <p>eu e você em um futuro nem tão distante (mas distante o suficiente ok), espero que voce não viva isso com outra pessoa!! eu te amo.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const itens = document.querySelectorAll('.item');
+
+    itens.forEach(item => {
+        item.addEventListener('click', () => {
+            if (item.classList.contains('ativo')) {
+                item.classList.remove('ativo');
+            } else {
+                itens.forEach(i => i.classList.remove('ativo'));
+                item.classList.add('ativo');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
